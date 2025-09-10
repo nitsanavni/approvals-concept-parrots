@@ -11,6 +11,13 @@ dependencies = [
     "ruff>=0.12.12",
 ]
 
+[project.scripts]
+lint = "commands.lint:main"
+typecheck = "commands.typecheck:main"
+typecheck-strict = "commands.typecheck_strict:main"
+test = "commands.test:main"
+check = "commands.check:main"
+
 [dependency-groups]
 dev = [
     "pyright>=1.1.405",

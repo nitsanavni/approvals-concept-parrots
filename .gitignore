@@ -6,3 +6,4 @@ __pycache__/
 # ApprovalTests
 *.received.txt
 *.received.*
+.mypy_cache/

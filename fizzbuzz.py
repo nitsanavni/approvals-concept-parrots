@@ -3,6 +3,7 @@
 # requires-python = ">=3.12"
 # ///
 
+
 def fizzbuzz(n):
     result = []
     for i in range(1, n + 1):
@@ -16,9 +17,10 @@ def fizzbuzz(n):
             result.append(str(i))
     return result
 
+
 if __name__ == "__main__":
     import sys
-    
+
     n = 15
     if len(sys.argv) > 1:
         try:
@@ -26,7 +28,7 @@ if __name__ == "__main__":
         except ValueError:
             print(f"Error: '{sys.argv[1]}' is not a valid number")
             sys.exit(1)
-    
+
     results = fizzbuzz(n)
     for item in results:
         print(item)
