@@ -19,7 +19,7 @@ def fizzbuzz(n):
 if __name__ == "__main__":
     import sys
     
-    n = 100
+    n = 15
     if len(sys.argv) > 1:
         try:
             n = int(sys.argv[1])
