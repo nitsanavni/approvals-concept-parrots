@@ -6,5 +6,15 @@ readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "approvaltests>=15.3.2",
+    "mypy>=1.17.1",
     "pytest>=8.4.2",
+    "ruff>=0.12.12",
 ]
+
+[dependency-groups]
+dev = [
+    "pyright>=1.1.405",
+]
+
+[tool.pyright]
+typeCheckingMode = "strict"
