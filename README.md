@@ -1,6 +1,6 @@
 # Approvals Concept: Parrots
 
-A parrot is a test double that records function calls and replays them from approved snapshots. It combines the benefits of approval testing with function mocking.
+A parrot is an approved test double that records function calls and replays them from approved snapshots. It combines the benefits of approval testing with function mocking.
 
 ## The Concept
 
