@@ -20,6 +20,22 @@ Just the raw Python code that accomplishes this:
 Important: Return ONLY executable Python code, nothing else."""
 
 
+def generate_claude_code(intention_prompt: str) -> str:
+    """
+    Generate Python code from Claude based on the given intention.
+    
+    Args:
+        intention_prompt: Description of what the Python code should do
+        
+    Returns:
+        Generated Python code as a string
+    """
+    # Get code from Claude
+    code_prompt = create_code_only_prompt(intention_prompt)
+    code = prompt_claude_code(code_prompt).strip()
+    return code
+
+
 def eval_claude_code(intention_prompt: str) -> str:
     """
     Prompt Claude to generate Python code for the given intention and evaluate it.
@@ -30,9 +46,7 @@ def eval_claude_code(intention_prompt: str) -> str:
     Returns:
         String containing both the generated code and its execution result
     """
-    # Get code from Claude
-    code_prompt = create_code_only_prompt(intention_prompt)
-    code = prompt_claude_code(code_prompt).strip()
+    code = generate_claude_code(intention_prompt)
     
     # Remove any markdown code blocks if they somehow appear
     if code.startswith("```"):

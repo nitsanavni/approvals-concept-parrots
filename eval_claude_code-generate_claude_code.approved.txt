@@ -1,0 +1,7 @@
+Function: eval_claude_code.generate_claude_code
+File: eval_claude_code.py
+--------------------------------------------------
+Args: ["Write a function that returns the string 'Hello, World!'"] -> Result: def hello_world():
+    return 'Hello, World!'
+Args: ['Create a simple calculator that adds two numbers: 5 + 3'] -> Result: print(5 + 3)
+Args: ['Generate a list comprehension that squares numbers from 1 to 5'] -> Result: [x**2 for x in range(1, 6)]
