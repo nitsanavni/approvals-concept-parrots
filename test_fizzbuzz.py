@@ -5,7 +5,7 @@
 # ///
 
 from approvaltests import verify
-from fizzbuzz import fizzbuzz, is_divisible_by
+from fizzbuzz import fizzbuzz_for, is_divisible_by
 from verify_parrot import parrot, verify_parrot
 
 
@@ -29,10 +29,23 @@ def test_is_divisible_by():
     ])
 
 
-def test_fizzbuzz():
+def test_fizzbuzz_for():
     with parrot(is_divisible_by):
-        result = fizzbuzz(15)
-        verify("\n".join(result))
+        assert fizzbuzz_for(1) == "1"
+        assert fizzbuzz_for(2) == "2"
+        assert fizzbuzz_for(3) == "Fizz"
+        assert fizzbuzz_for(4) == "4"
+        assert fizzbuzz_for(5) == "Buzz"
+        assert fizzbuzz_for(6) == "Fizz"
+        assert fizzbuzz_for(7) == "7"
+        assert fizzbuzz_for(8) == "8"
+        assert fizzbuzz_for(9) == "Fizz"
+        assert fizzbuzz_for(10) == "Buzz"
+        assert fizzbuzz_for(11) == "11"
+        assert fizzbuzz_for(12) == "Fizz"
+        assert fizzbuzz_for(13) == "13"
+        assert fizzbuzz_for(14) == "14"
+        assert fizzbuzz_for(15) == "FizzBuzz"
 
 
 if __name__ == "__main__":

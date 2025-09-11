@@ -32,8 +32,8 @@ def test_is_divisible_by():
         [7, 3], [7, 5]
     ])
 
-# Now use the parrot as a test double for testing fizzbuzz
-def fizzbuzz(n):
+# Now use the parrot as a test double for testing fizzbuzz_for
+def fizzbuzz_for(n):
     if is_divisible_by(n, 3) and is_divisible_by(n, 5):
         return "FizzBuzz"
     elif is_divisible_by(n, 3):
@@ -43,12 +43,12 @@ def fizzbuzz(n):
     else:
         return str(n)
 
-def test_fizzbuzz():
+def test_fizzbuzz_for():
     with parrot(is_divisible_by):  # Uses approved results as test double
-        assert fizzbuzz(15) == "FizzBuzz"
-        assert fizzbuzz(9) == "Fizz"
-        assert fizzbuzz(5) == "Buzz"
-        assert fizzbuzz(7) == "7"
+        assert fizzbuzz_for(15) == "FizzBuzz"
+        assert fizzbuzz_for(9) == "Fizz"
+        assert fizzbuzz_for(5) == "Buzz"
+        assert fizzbuzz_for(7) == "7"
 ```
 
 The workflow:
