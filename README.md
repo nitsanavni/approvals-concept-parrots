@@ -28,7 +28,8 @@ def test_is_divisible_by():
         [15, 3], [15, 5], [15, 7],
         [9, 3], [9, 5],
         [5, 3], [5, 5],
-        [3, 3], [3, 5]
+        [3, 3], [3, 5],
+        [7, 3], [7, 5]
     ])
 
 # Now use the parrot as a test double for testing fizzbuzz
