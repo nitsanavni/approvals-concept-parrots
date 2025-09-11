@@ -2,25 +2,25 @@
 import subprocess
 import sys
 
-def lint():
+def lint() -> int:
     """Run ruff linter"""
     return subprocess.run(["ruff", "check", "."]).returncode
 
-def typecheck():
+def typecheck() -> int:
     """Run mypy type checker"""
     return subprocess.run(["mypy", ".", "--exclude", "__pycache__"]).returncode
 
-def typecheck_strict():
+def typecheck_strict() -> int:
     """Run pyright type checker with strict mode"""
     return subprocess.run(["pyright", "."]).returncode
 
-def test():
+def test() -> int:
     """Run pytest"""
     return subprocess.run(["pytest"]).returncode
 
-def check():
+def check() -> int:
     """Run all checks: lint, typecheck, and test"""
-    results = []
+    results: list[int] = []
     print("Running lint...")
     results.append(lint())
     print("\nRunning typecheck...")

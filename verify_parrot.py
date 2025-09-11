@@ -6,13 +6,13 @@
 
 import pickle
 import inspect
-from typing import List, Callable, Any
+from typing import List, Callable, Any, Optional
 from pathlib import Path
 from approvaltests import verify, verify_binary, Namer, Options
 from unittest.mock import patch
 
 
-def verify_parrot(fn: Callable, args: List[List]) -> None:
+def verify_parrot(fn: Callable[..., Any], args: List[List[Any]]) -> None:
     fn_module = inspect.getmodule(fn)
     fn_file = inspect.getfile(fn) if fn_module else "unknown"
     fn_name = fn.__name__
@@ -43,10 +43,10 @@ def verify_parrot(fn: Callable, args: List[List]) -> None:
     pickled_data = pickle.dumps(cache_data, protocol=pickle.HIGHEST_PROTOCOL)
     
     class PickleNamer(Namer):
-        def get_approved_filename(self, base=None):
+        def get_approved_filename(self, base: Optional[str] = None) -> str:
             return str(Path.cwd() / f"{fn_file_name}-{fn_name}.approved.pickle")
         
-        def get_received_filename(self, base=None):
+        def get_received_filename(self, base: Optional[str] = None) -> str:
             return str(Path.cwd() / f"{fn_file_name}-{fn_name}.received.pickle")
     
     # Create human-readable format for approval testing
@@ -61,14 +61,14 @@ def verify_parrot(fn: Callable, args: List[List]) -> None:
             human_readable += f"Args: {entry['args']} -> Result: {entry.get('result')}\n"
     
     class TextNamer(Namer):
-        def get_approved_filename(self, base=None):
+        def get_approved_filename(self, base: Optional[str] = None) -> str:
             return str(Path.cwd() / f"{fn_file_name}-{fn_name}.approved.txt")
         
-        def get_received_filename(self, base=None):
+        def get_received_filename(self, base: Optional[str] = None) -> str:
             return str(Path.cwd() / f"{fn_file_name}-{fn_name}.received.txt")
     
     # Collect any approval exceptions to raise at the end
-    exceptions = []
+    exceptions: list[Exception] = []
     
     # Verify binary pickle data
     try:
@@ -89,7 +89,7 @@ def verify_parrot(fn: Callable, args: List[List]) -> None:
         raise exceptions[0]
 
 
-def parrot(fn: Callable):
+def parrot(fn: Callable[..., Any]) -> Any:
     fn_module = inspect.getmodule(fn)
     fn_file = inspect.getfile(fn) if fn_module else "unknown"
     fn_name = fn.__name__
@@ -107,7 +107,7 @@ def parrot(fn: Callable):
         cache_data = pickle.load(f)
     
     # Build lookup map from args to results
-    results_map = {}
+    results_map: dict[tuple[Any, ...], Any] = {}
     for entry in cache_data['results']:
         # Convert args list to tuple for hashable key
         args_key = tuple(entry['args'])
@@ -120,7 +120,7 @@ def parrot(fn: Callable):
     fn_module_name = fn_module.__name__ if fn_module else '__main__'
     patch_target = f"{fn_module_name}.{fn_name}"
     
-    def mock_fn(*call_args):
+    def mock_fn(*call_args: Any) -> Any:
         args_key = tuple(call_args)
         if args_key not in results_map:
             raise ValueError(f"No cached result for args: {call_args}")

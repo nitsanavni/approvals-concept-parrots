@@ -38,7 +38,7 @@ def eval_claude_code(intention_prompt: str) -> str:
     if code.startswith("```"):
         lines = code.split("\n")
         # Find start and end of code block
-        code_lines = []
+        code_lines: list[str] = []
         in_block = False
         for line in lines:
             if line.startswith("```") and not in_block:

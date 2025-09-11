@@ -3,9 +3,9 @@ import subprocess
 import sys
 
 
-def main():
+def main() -> None:
     """Run all checks: lint, typecheck, and test"""
-    results = []
+    results: list[int] = []
     
     print("Running lint...")
     results.append(subprocess.run(["uv", "run", "ruff", "check", "."]).returncode)
