@@ -6,10 +6,9 @@
 
 import pickle
 import inspect
-import json
 from typing import List, Callable, Any
 from pathlib import Path
-from approvaltests import verify, Namer
+from approvaltests import verify, verify_binary, Namer, Options
 
 
 def verify_parrot(fn: Callable, args: List[List]) -> None:
@@ -39,10 +38,15 @@ def verify_parrot(fn: Callable, args: List[List]) -> None:
                 "error": str(e)
             })
     
-    # Save pickle file
-    pickle_file = Path(f"{fn_file_name}-{fn_name}.pickle")
-    with open(pickle_file, 'wb') as f:
-        pickle.dump(cache_data, f, protocol=pickle.HIGHEST_PROTOCOL)
+    # Use approvaltests to verify pickle data
+    pickled_data = pickle.dumps(cache_data, protocol=pickle.HIGHEST_PROTOCOL)
+    
+    class PickleNamer(Namer):
+        def get_approved_filename(self, base=None):
+            return f"{fn_file_name}-{fn_name}.approved.pickle"
+        
+        def get_received_filename(self, base=None):
+            return f"{fn_file_name}-{fn_name}.received.pickle"
     
     # Create human-readable format for approval testing
     human_readable = f"Function: {cache_data['function']}\n"
@@ -55,11 +59,30 @@ def verify_parrot(fn: Callable, args: List[List]) -> None:
         else:
             human_readable += f"Args: {entry['args']} -> Result: {entry['result']}\n"
     
-    class CustomNamer(Namer):
+    class TextNamer(Namer):
         def get_approved_filename(self, base=None):
             return f"{fn_file_name}-{fn_name}.approved.txt"
         
         def get_received_filename(self, base=None):
             return f"{fn_file_name}-{fn_name}.received.txt"
     
-    verify(human_readable, namer=CustomNamer())
+    # Collect any approval exceptions to raise at the end
+    exceptions = []
+    
+    # Verify binary pickle data
+    try:
+        pickle_options = Options().with_namer(PickleNamer())
+        verify_binary(pickled_data, ".pickle", options=pickle_options)
+    except Exception as e:
+        exceptions.append(e)
+    
+    # Verify human-readable text
+    try:
+        text_options = Options().with_namer(TextNamer())
+        verify(human_readable, options=text_options)
+    except Exception as e:
+        exceptions.append(e)
+    
+    # If any verifications failed, raise the first exception
+    if exceptions:
+        raise exceptions[0]
