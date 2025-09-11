@@ -1,6 +1,23 @@
 from prompt_claude_code import prompt_claude_code
 
 
+def create_code_only_prompt(intention_prompt: str) -> str:
+    """
+    Create a prompt that instructs Claude to return only valid Python code.
+    
+    Args:
+        intention_prompt: Description of what the Python code should do
+        
+    Returns:
+        Formatted prompt string for Claude
+    """
+    return f"""Return ONLY valid Python code with no explanations, no markdown, no decorations.
+Just the raw Python code that accomplishes this:
+{intention_prompt}
+
+Important: Return ONLY executable Python code, nothing else."""
+
+
 def eval_claude_code(intention_prompt: str) -> str:
     """
     Prompt Claude to generate Python code for the given intention and evaluate it.
@@ -11,14 +28,8 @@ def eval_claude_code(intention_prompt: str) -> str:
     Returns:
         String containing both the generated code and its execution result
     """
-    # Craft prompt to get only valid Python code
-    code_prompt = f"""Return ONLY valid Python code with no explanations, no markdown, no decorations.
-Just the raw Python code that accomplishes this:
-{intention_prompt}
-
-Important: Return ONLY executable Python code, nothing else."""
-    
     # Get code from Claude
+    code_prompt = create_code_only_prompt(intention_prompt)
     code = prompt_claude_code(code_prompt).strip()
     
     # Remove any markdown code blocks if they somehow appear
