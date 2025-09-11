@@ -9,3 +9,28 @@ Args: ['Write a haiku about Python'] -> Result: Python slithers through
 Indentation marks its path  
 Simple, yet profound
 
+Args: ['Return ONLY valid Python code with no explanations, no markdown, no decorations.\nJust the raw Python code that accomplishes this:\nCalculate the sum of 2 and 2 and print the result\n\nImportant: Return ONLY executable Python code, nothing else.'] -> Result: print(2 + 2)
+
+Args: ['Return ONLY valid Python code with no explanations, no markdown, no decorations.\nJust the raw Python code that accomplishes this:\nGenerate a list of the first 5 prime numbers and print it\n\nImportant: Return ONLY executable Python code, nothing else.'] -> Result: def is_prime(n):
+    if n < 2:
+        return False
+    for i in range(2, int(n**0.5) + 1):
+        if n % i == 0:
+            return False
+    return True
+
+primes = []
+num = 2
+while len(primes) < 5:
+    if is_prime(num):
+        primes.append(num)
+    num += 1
+
+print(primes)
+
+Args: ["Return ONLY valid Python code with no explanations, no markdown, no decorations.\nJust the raw Python code that accomplishes this:\nCreate a function that reverses a string and call it with 'hello' and print the result\n\nImportant: Return ONLY executable Python code, nothing else."] -> Result: def reverse_string(s):
+    return s[::-1]
+
+result = reverse_string('hello')
+print(result)
+
