@@ -25,11 +25,11 @@ def is_divisible_by(n, divisor):
 # Create a parrot by approval-testing the function
 def test_is_divisible_by():
     verify_parrot(is_divisible_by, [
-        [15, 3], [15, 5],
-        [9, 3], [9, 5],
-        [5, 3], [5, 5],
         [3, 3], [3, 5],
-        [7, 3], [7, 5]
+        [5, 3], [5, 5],
+        [7, 3], [7, 5],
+        [9, 3], [9, 5],
+        [15, 3], [15, 5]
     ])
 
 # Now use the parrot as a test double for testing fizzbuzz_for
