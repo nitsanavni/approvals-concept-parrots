@@ -20,7 +20,7 @@ def verify_parrot(fn: Callable, args: List[List]) -> None:
     fn_file_path = Path(fn_file)
     fn_file_name = fn_file_path.stem if fn_file_path.name != "unknown" else "unknown"
     
-    cache_data = {
+    cache_data: dict[str, Any] = {
         "function": f"{fn_file_name}.{fn_name}",
         "file": str(Path(fn_file).relative_to(Path.cwd())),
         "results": []
@@ -56,9 +56,9 @@ def verify_parrot(fn: Callable, args: List[List]) -> None:
     
     for entry in cache_data['results']:
         if 'error' in entry:
-            human_readable += f"Args: {entry['args']} -> ERROR: {entry['error']}\n"
+            human_readable += f"Args: {entry['args']} -> ERROR: {entry.get('error')}\n"
         else:
-            human_readable += f"Args: {entry['args']} -> Result: {entry['result']}\n"
+            human_readable += f"Args: {entry['args']} -> Result: {entry.get('result')}\n"
     
     class TextNamer(Namer):
         def get_approved_filename(self, base=None):

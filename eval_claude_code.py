@@ -1,3 +1,5 @@
+import subprocess
+
 from prompt_claude_code import prompt_claude_code
 
 
@@ -16,9 +18,6 @@ Just the raw Python code that accomplishes this:
 {intention_prompt}
 
 Important: Return ONLY executable Python code, nothing else."""
-
-
-import subprocess
 
 
 def eval_claude_code(intention_prompt: str) -> str:

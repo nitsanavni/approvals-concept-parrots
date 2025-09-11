@@ -1,5 +1,5 @@
 import subprocess
-from filecache import filecache
+from filecache import filecache  # type: ignore[import-untyped]
 
 
 @filecache
