@@ -5,20 +5,7 @@
 # ///
 
 from verify_parrot import verify_parrot
-
-
-def add(a, b):
-    return a + b
-
-
-def multiply(x, y):
-    return x * y
-
-
-def divide(a, b):
-    if b == 0:
-        raise ValueError("Cannot divide by zero")
-    return a / b
+from math_operations import add, multiply, divide
 
 
 def test_verify_parrot_with_add():

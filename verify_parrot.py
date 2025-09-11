@@ -43,10 +43,10 @@ def verify_parrot(fn: Callable, args: List[List]) -> None:
     
     class PickleNamer(Namer):
         def get_approved_filename(self, base=None):
-            return f"{fn_file_name}-{fn_name}.approved.pickle"
+            return str(Path.cwd() / f"{fn_file_name}-{fn_name}.approved.pickle")
         
         def get_received_filename(self, base=None):
-            return f"{fn_file_name}-{fn_name}.received.pickle"
+            return str(Path.cwd() / f"{fn_file_name}-{fn_name}.received.pickle")
     
     # Create human-readable format for approval testing
     human_readable = f"Function: {cache_data['function']}\n"
@@ -61,10 +61,10 @@ def verify_parrot(fn: Callable, args: List[List]) -> None:
     
     class TextNamer(Namer):
         def get_approved_filename(self, base=None):
-            return f"{fn_file_name}-{fn_name}.approved.txt"
+            return str(Path.cwd() / f"{fn_file_name}-{fn_name}.approved.txt")
         
         def get_received_filename(self, base=None):
-            return f"{fn_file_name}-{fn_name}.received.txt"
+            return str(Path.cwd() / f"{fn_file_name}-{fn_name}.received.txt")
     
     # Collect any approval exceptions to raise at the end
     exceptions = []
