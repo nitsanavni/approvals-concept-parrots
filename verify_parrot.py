@@ -21,7 +21,7 @@ def verify_parrot(fn: Callable, args: List[List]) -> None:
     
     cache_data = {
         "function": f"{fn_file_name}.{fn_name}",
-        "file": str(fn_file),
+        "file": str(Path(fn_file).relative_to(Path.cwd())),
         "results": []
     }
     

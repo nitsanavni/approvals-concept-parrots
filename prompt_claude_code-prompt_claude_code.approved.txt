@@ -1,0 +1,11 @@
+Function: prompt_claude_code.prompt_claude_code
+File: prompt_claude_code.py
+--------------------------------------------------
+Args: ['What is 2+2?'] -> Result: 4
+
+Args: ['What is the capital of France?'] -> Result: Paris
+
+Args: ['Write a haiku about Python'] -> Result: Python slithers through  
+Indentation marks its path  
+Simple, yet profound
+

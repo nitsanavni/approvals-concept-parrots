@@ -1,5 +1,5 @@
 Function: math_operations.multiply
-File: /Users/nitsanavni/code/approvals-concept-parrots/math_operations.py
+File: math_operations.py
 --------------------------------------------------
 Args: [2, 3] -> Result: 6
 Args: [0, 5] -> Result: 0

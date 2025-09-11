@@ -1,5 +1,5 @@
 Function: math_operations.divide
-File: /Users/nitsanavni/code/approvals-concept-parrots/math_operations.py
+File: math_operations.py
 --------------------------------------------------
 Args: [10, 2] -> Result: 5.0
 Args: [8, 0] -> ERROR: Cannot divide by zero

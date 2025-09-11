@@ -1,5 +1,5 @@
 Function: math_operations.add
-File: /Users/nitsanavni/code/approvals-concept-parrots/math_operations.py
+File: math_operations.py
 --------------------------------------------------
 Args: [1, 2] -> Result: 3
 Args: [3, 4] -> Result: 7
