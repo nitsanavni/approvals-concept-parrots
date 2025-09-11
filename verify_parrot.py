@@ -9,6 +9,7 @@ import inspect
 from typing import List, Callable, Any
 from pathlib import Path
 from approvaltests import verify, verify_binary, Namer, Options
+from unittest.mock import patch
 
 
 def verify_parrot(fn: Callable, args: List[List]) -> None:
@@ -86,3 +87,47 @@ def verify_parrot(fn: Callable, args: List[List]) -> None:
     # If any verifications failed, raise the first exception
     if exceptions:
         raise exceptions[0]
+
+
+def parrot(fn: Callable, args: List):
+    fn_module = inspect.getmodule(fn)
+    fn_file = inspect.getfile(fn) if fn_module else "unknown"
+    fn_name = fn.__name__
+    
+    fn_file_path = Path(fn_file)
+    fn_file_name = fn_file_path.stem if fn_file_path.name != "unknown" else "unknown"
+    
+    # Load the pickle file
+    pickle_file = Path.cwd() / f"{fn_file_name}-{fn_name}.approved.pickle"
+    
+    if not pickle_file.exists():
+        raise FileNotFoundError(f"No approved pickle file found: {pickle_file}")
+    
+    with open(pickle_file, 'rb') as f:
+        cache_data = pickle.load(f)
+    
+    # Build lookup map from args to results
+    results_map = {}
+    for entry in cache_data['results']:
+        # Convert args list to tuple for hashable key
+        args_key = tuple(entry['args'])
+        if 'error' in entry:
+            results_map[args_key] = Exception(entry['error'])
+        else:
+            results_map[args_key] = entry['result']
+    
+    # Get the fully qualified name for patching
+    fn_module_name = fn_module.__name__ if fn_module else '__main__'
+    patch_target = f"{fn_module_name}.{fn_name}"
+    
+    def mock_fn(*call_args):
+        args_key = tuple(call_args)
+        if args_key not in results_map:
+            raise ValueError(f"No cached result for args: {call_args}")
+        result = results_map[args_key]
+        if isinstance(result, Exception):
+            raise result
+        return result
+    
+    # Return the patch context manager
+    return patch(patch_target, side_effect=mock_fn)
