@@ -4,7 +4,8 @@
 # dependencies = ["pytest", "approvaltests"]
 # ///
 
-from approvaltests import verify
+from approvaltests import verify, Options
+from approvaltests.inline.inline_options import InlineOptions
 from fizzbuzz import fizzbuzz_for, is_divisible_by
 from verify_parrot import parrot, verify_parrot
 
@@ -20,12 +21,17 @@ def test_is_divisible_by():
 
 
 def test_fizzbuzz_for():
+    """
+    3 -> Fizz
+    5 -> Buzz
+    7 -> 7
+    9 -> Fizz
+    15 -> FizzBuzz
+    """
     with parrot(is_divisible_by):
-        assert fizzbuzz_for(3) == "Fizz"
-        assert fizzbuzz_for(5) == "Buzz"
-        assert fizzbuzz_for(7) == "7"
-        assert fizzbuzz_for(9) == "Fizz"
-        assert fizzbuzz_for(15) == "FizzBuzz"
+        numbers = [3, 5, 7, 9, 15]
+        results = [f"{n} -> {fizzbuzz_for(n)}" for n in numbers]
+        verify("\n".join(results), options=Options().inline(InlineOptions.automatic()))
 
 
 if __name__ == "__main__":

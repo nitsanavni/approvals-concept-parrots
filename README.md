@@ -45,10 +45,9 @@ def fizzbuzz_for(n):
 
 def test_fizzbuzz_for():
     with parrot(is_divisible_by):  # Uses approved results as test double
-        assert fizzbuzz_for(15) == "FizzBuzz"
-        assert fizzbuzz_for(9) == "Fizz"
-        assert fizzbuzz_for(5) == "Buzz"
-        assert fizzbuzz_for(7) == "7"
+        numbers = [3, 5, 7, 9, 15]
+        results = [f"{n} -> {fizzbuzz_for(n)}" for n in numbers]
+        verify("\n".join(results))
 ```
 
 The workflow:
