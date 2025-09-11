@@ -7,3 +7,28 @@ Args: ["Write a function that returns the string 'Hello, World!'"] -> Result: de
 print(hello_world())
 Args: ['Create a simple calculator that adds two numbers: 5 + 3'] -> Result: print(5 + 3)
 Args: ['Generate a list comprehension that squares numbers from 1 to 5'] -> Result: print([x**2 for x in range(1, 6)])
+Args: ["Write a function that returns the string 'Hello, World!' and call it"] -> Result: def hello_world():
+    return 'Hello, World!'
+
+print(hello_world())
+Args: ['Print the first 10 Fibonacci numbers'] -> Result: ```python
+a, b = 0, 1
+for _ in range(10):
+    print(a)
+    a, b = b, a + b
+```
+Args: ["Create a dictionary with keys 'a', 'b', 'c' and values 1, 2, 3, then print it"] -> Result: ```python
+dictionary = {'a': 1, 'b': 2, 'c': 3}
+print(dictionary)
+```
+Args: ['Calculate the factorial of 5'] -> Result: ```python
+def factorial(n):
+    if n == 0 or n == 1:
+        return 1
+    result = 1
+    for i in range(2, n + 1):
+        result *= i
+    return result
+
+print(factorial(5))
+```
