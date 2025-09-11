@@ -19,24 +19,35 @@ You can approval-test a function AND then reuse those approved results as a test
 from verify_parrot import parrot, verify_parrot
 
 # The function we want to test
-def translate_to_spanish(text):
-    # Complex translation logic
-    return f"Spanish: {text}"
+def is_divisible_by(n, divisor):
+    return n % divisor == 0
 
 # Create a parrot by approval-testing the function
-def test_translate():
-    verify_parrot(translate_to_spanish, ["Hello"])
-    verify_parrot(translate_to_spanish, ["Goodbye"])
+def test_is_divisible_by():
+    verify_parrot(is_divisible_by, [
+        [15, 3], [15, 5], [15, 7],
+        [9, 3], [9, 5],
+        [5, 3], [5, 5],
+        [3, 3], [3, 5]
+    ])
 
-# Now use the parrot as a test double for collaborators
-def greeting_service(name):
-    translation = translate_to_spanish(f"Hello {name}")
-    return f"Greeting: {translation}"
+# Now use the parrot as a test double for testing fizzbuzz
+def fizzbuzz(n):
+    if is_divisible_by(n, 3) and is_divisible_by(n, 5):
+        return "FizzBuzz"
+    elif is_divisible_by(n, 3):
+        return "Fizz"
+    elif is_divisible_by(n, 5):
+        return "Buzz"
+    else:
+        return str(n)
 
-def test_greeting_service():
-    with parrot(translate_to_spanish):  # Uses approved results as test double
-        result = greeting_service("Alice")
-        assert result == "Greeting: Spanish: Hello Alice"
+def test_fizzbuzz():
+    with parrot(is_divisible_by):  # Uses approved results as test double
+        assert fizzbuzz(15) == "FizzBuzz"
+        assert fizzbuzz(9) == "Fizz"
+        assert fizzbuzz(5) == "Buzz"
+        assert fizzbuzz(7) == "7"
 ```
 
 The workflow:
