@@ -18,6 +18,9 @@ Just the raw Python code that accomplishes this:
 Important: Return ONLY executable Python code, nothing else."""
 
 
+import subprocess
+
+
 def eval_claude_code(intention_prompt: str) -> str:
     """
     Prompt Claude to generate Python code for the given intention and evaluate it.
@@ -48,31 +51,17 @@ def eval_claude_code(intention_prompt: str) -> str:
                 code_lines.append(line)
         code = "\n".join(code_lines)
     
-    # Execute the code and capture result
+    # Execute the code using subprocess
     try:
-        # Create a namespace for execution
-        namespace = {}
-        exec(code, namespace)
-        
-        # Try to get a meaningful result
-        # Check if there's a main function or last expression
-        result = None
-        if 'main' in namespace and callable(namespace['main']):
-            result = namespace['main']()
-        elif 'result' in namespace:
-            result = namespace['result']
-        else:
-            # Try to evaluate the last line as an expression if possible
-            lines = code.strip().split('\n')
-            if lines:
-                last_line = lines[-1].strip()
-                try:
-                    result = eval(last_line, namespace)
-                except:
-                    # Last line wasn't an expression
-                    pass
-        
-        result_str = f"Code:\n{code}\n\nResult: {result}"
+        result = subprocess.run(
+            ["uv", "run", "python", "-c", code],
+            capture_output=True,
+            text=True,
+            check=True
+        )
+        result_str = f"Code:\n{code}\n\nResult: {result.stdout.strip() if result.stdout else 'None'}"
+    except subprocess.CalledProcessError as e:
+        result_str = f"Code:\n{code}\n\nError: {e.stderr if e.stderr else str(e)}"
     except Exception as e:
         result_str = f"Code:\n{code}\n\nError: {e}"
     

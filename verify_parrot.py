@@ -89,7 +89,7 @@ def verify_parrot(fn: Callable, args: List[List]) -> None:
         raise exceptions[0]
 
 
-def parrot(fn: Callable, args: List):
+def parrot(fn: Callable):
     fn_module = inspect.getmodule(fn)
     fn_file = inspect.getfile(fn) if fn_module else "unknown"
     fn_name = fn.__name__

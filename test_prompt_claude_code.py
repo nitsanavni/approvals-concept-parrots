@@ -1,6 +1,7 @@
+from approvaltests import verify
 from prompt_claude_code import prompt_claude_code
-from eval_claude_code import create_code_only_prompt
-from verify_parrot import verify_parrot
+from eval_claude_code import create_code_only_prompt, eval_claude_code
+from verify_parrot import verify_parrot, parrot
 
 
 def test_prompt_claude_code():
@@ -27,3 +28,8 @@ def test_prompt_claude_code():
             ],
         ],
     )
+
+
+def test_eval_claude_code():
+    with parrot(prompt_claude_code):
+        verify(eval_claude_code("Generate a list of the first 5 prime numbers"))
