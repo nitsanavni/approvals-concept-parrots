@@ -1,0 +1,33 @@
+Function: fizzbuzz.is_divisible_by
+File: fizzbuzz.py
+--------------------------------------------------
+Args: [1, 3] -> Result: False
+Args: [1, 5] -> Result: False
+Args: [2, 3] -> Result: False
+Args: [2, 5] -> Result: False
+Args: [3, 3] -> Result: True
+Args: [3, 5] -> Result: False
+Args: [4, 3] -> Result: False
+Args: [4, 5] -> Result: False
+Args: [5, 3] -> Result: False
+Args: [5, 5] -> Result: True
+Args: [6, 3] -> Result: True
+Args: [6, 5] -> Result: False
+Args: [7, 3] -> Result: False
+Args: [7, 5] -> Result: False
+Args: [8, 3] -> Result: False
+Args: [8, 5] -> Result: False
+Args: [9, 3] -> Result: True
+Args: [9, 5] -> Result: False
+Args: [10, 3] -> Result: False
+Args: [10, 5] -> Result: True
+Args: [11, 3] -> Result: False
+Args: [11, 5] -> Result: False
+Args: [12, 3] -> Result: True
+Args: [12, 5] -> Result: False
+Args: [13, 3] -> Result: False
+Args: [13, 5] -> Result: False
+Args: [14, 3] -> Result: False
+Args: [14, 5] -> Result: False
+Args: [15, 3] -> Result: True
+Args: [15, 5] -> Result: True
