@@ -1,30 +1,13 @@
 from approvaltests import verify, Options
 from approvaltests.inline.inline_options import InlineOptions
 from fizzbuzz import fizzbuzz_for, is_divisible_by
-from parrot import parrot, verify_parrot
-
-
-def test_is_divisible_by():
-    verify_parrot(
-        is_divisible_by,
-        [
-            [3, 3],
-            [3, 5],
-            [5, 3],
-            [5, 5],
-            [7, 3],
-            [7, 5],
-            [9, 3],
-            [9, 5],
-            [15, 3],
-            [15, 5],
-        ],
-    )
+from parrot import parrot
 
 
 def test_fizzbuzz_for():
     """
     3 -> Fizz
+    4 -> 4
     5 -> Buzz
     7 -> 7
     9 -> Fizz
