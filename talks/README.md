@@ -1,15 +1,45 @@
-# talks
+# Talks
 
-To install dependencies:
+Slidev presentations for the approvals-concept-parrots project.
+
+🔗 **[View live presentations](https://nitsanavni.github.io/approvals-concept-parrots/)**
+
+## Setup
+
+Install dependencies:
 
 ```bash
 bun install
 ```
 
-To run:
+## Development
+
+View presentations locally:
 
 ```bash
-bun run index.ts
+# For hello1 presentation
+bun run dev:hello1
+
+# For hello2 presentation  
+bun run dev:hello2
 ```
 
-This project was created using `bun init` in bun v1.2.16. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
+## Build
+
+Build all presentations for deployment:
+
+```bash
+bun run build:all
+```
+
+## Preview
+
+Preview the built presentations:
+
+```bash
+bun run preview
+```
+
+The presentations will be available at:
+- `/hello1/` - Hello1 presentation
+- `/hello2/` - Hello2 presentation
