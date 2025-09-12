@@ -23,7 +23,8 @@ def clear_missing_args_hooks() -> None:
 
 
 def verify_parrot(fn: Callable[..., Any], args: List[List[Any]]) -> None:
-    # TODO - if args empty - throw
+    if not args:
+        raise ValueError("args list cannot be empty - provide at least one set of arguments to test")
     fn_module = inspect.getmodule(fn)
     fn_file = inspect.getfile(fn) if fn_module else "unknown"
     fn_name = fn.__name__
