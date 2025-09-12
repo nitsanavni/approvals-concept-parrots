@@ -1,6 +1,14 @@
+- [ ] review original example using parrots to understand it better
 - [ ] error when parrot is missing required specific args - the message could say how to fix it - the AI will do it automagically
+  - this means one workflow is to start with the `with parrot(fn):` - the error message / hook will guide the agent in the right direction
+  - we could try to find the existing `verify_parrot(fn)` and suggest an edit, if we don't find it we could suggest to add it from scratch
 - [ ] omg hooks! if I have a hook I can run my local agent with this information
 - [ ] slidev per concept
+- [ ] hooks can be shell cmds, or python functions
+  - shell cmds are cross-language/stack
+  - the temp logs can be implemented by hooks - which means they can be implemented once
+- [ ] parrot + executable command
+- [ ] approvals.rc / `.approvals/hooks/mismatch`
 
 - [x] serialize/deserialize function calls
 - [x] **AND** allow human-readable printers too
