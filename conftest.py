@@ -1,4 +1,3 @@
-import pytest
 import re
 from pathlib import Path
 from parrot import register_missing_args_hook
@@ -6,7 +5,7 @@ from parrot import register_missing_args_hook
 
 def hello_hook(function_name: str, file_path: str, args, cache_data: dict) -> None:
     """A friendly hook that prints info when uncached arguments are encountered."""
-    print(f"\n🦜 Hello! Parrot encountered uncached arguments:")
+    print("\n🦜 Hello! Parrot encountered uncached arguments:")
     print(f"   Function: {function_name}")
     print(f"   File: {file_path}")
     print(f"   Arguments: {args}")
@@ -25,7 +24,7 @@ def hello_hook(function_name: str, file_path: str, args, cache_data: dict) -> No
             if re.search(pattern, content, re.MULTILINE | re.DOTALL):
                 # Find the line numbers
                 for i, line in enumerate(content.splitlines(), 1):
-                    if re.search(rf"verify_parrot\s*\(", line):
+                    if re.search(r"verify_parrot\s*\(", line):
                         # Check if this is the right verify_parrot by looking ahead
                         lines_ahead = content.splitlines()[i-1:i+3]
                         block = "\n".join(lines_ahead)
