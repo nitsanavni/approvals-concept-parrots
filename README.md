@@ -16,7 +16,7 @@ You can approval-test a function AND then reuse those approved results as a test
 ## Example
 
 ```python
-from verify_parrot import parrot, verify_parrot
+from parrot import parrot, verify_parrot
 
 # The function we want to test
 def is_divisible_by(n, divisor):

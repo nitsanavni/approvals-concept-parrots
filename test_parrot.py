@@ -4,7 +4,7 @@
 # dependencies = ["pytest", "approvaltests"]
 # ///
 
-from verify_parrot import verify_parrot
+from parrot import verify_parrot
 from math_operations import add, multiply, divide
 
 

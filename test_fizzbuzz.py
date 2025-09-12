@@ -7,7 +7,7 @@
 from approvaltests import verify, Options
 from approvaltests.inline.inline_options import InlineOptions
 from fizzbuzz import fizzbuzz_for, is_divisible_by
-from verify_parrot import parrot, verify_parrot
+from parrot import parrot, verify_parrot
 
 
 def test_is_divisible_by():

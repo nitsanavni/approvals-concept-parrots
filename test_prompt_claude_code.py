@@ -1,7 +1,7 @@
 from approvaltests import verify
 from prompt_claude_code import prompt_claude_code
 from eval_claude_code import create_code_only_prompt, eval_claude_code
-from verify_parrot import verify_parrot, parrot
+from parrot import verify_parrot, parrot
 
 
 def test_prompt_claude_code():

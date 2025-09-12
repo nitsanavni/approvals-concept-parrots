@@ -1,7 +1,7 @@
 from approvaltests import verify, Options
 from approvaltests.inline.inline_options import InlineOptions
 from eval_claude_code import eval_claude_code
-from verify_parrot import parrot
+from parrot import parrot
 from prompt_claude_code import prompt_claude_code
 
 

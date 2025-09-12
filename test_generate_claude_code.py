@@ -1,4 +1,4 @@
-from verify_parrot import verify_parrot
+from parrot import verify_parrot
 from eval_claude_code import generate_claude_code
 
 
