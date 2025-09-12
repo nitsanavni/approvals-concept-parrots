@@ -101,6 +101,7 @@ def test_{function_name}():
         # Write the test file
         test_file_path.write_text(test_content)
         print(f"   Created test file: {test_file_path}")
+        print(f"   💡 Consider renaming this file to something more descriptive!")
         print(f"   Run 'pytest {test_file_name}::test_{function_name}' to capture the result!")
     print()
 
