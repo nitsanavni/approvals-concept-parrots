@@ -1,0 +1,21 @@
+{
+  "name": "talks",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev:hello1": "slidev hello1.md",
+    "dev:hello2": "slidev hello2.md",
+    "build:hello1": "slidev build hello1.md --out dist/hello1 --base /approvals-concept-parrots/hello1/",
+    "build:hello2": "slidev build hello2.md --out dist/hello2 --base /approvals-concept-parrots/hello2/",
+    "build:all": "bun run build:hello1 && bun run build:hello2 && cp index.html dist/",
+    "preview": "bunx serve dist"
+  },
+  "devDependencies": {
+    "@slidev/cli": "^52.1.0",
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  }
+}
