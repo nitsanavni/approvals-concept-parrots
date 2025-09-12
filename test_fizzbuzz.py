@@ -1,9 +1,3 @@
-#!/usr/bin/env -S uv run --script
-# /// script
-# requires-python = ">=3.12"
-# dependencies = ["pytest", "approvaltests"]
-# ///
-
 from approvaltests import verify, Options
 from approvaltests.inline.inline_options import InlineOptions
 from fizzbuzz import fizzbuzz_for, is_divisible_by
@@ -40,9 +34,3 @@ def test_fizzbuzz_for():
         numbers = [3, 4, 5, 7, 9, 15]
         results = [f"{n} -> {fizzbuzz_for(n)}" for n in numbers]
         verify("\n".join(results), options=Options().inline(InlineOptions.automatic()))
-
-
-if __name__ == "__main__":
-    import pytest
-
-    pytest.main([__file__, "-v"])
