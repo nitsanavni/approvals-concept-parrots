@@ -97,6 +97,16 @@ def verify_parrot(fn: Callable[..., Any], args: List[List[Any]]) -> None:
         raise exceptions[0]
 
 
+def _make_hashable(obj: Any) -> Any:
+    """Convert lists and dicts to hashable tuples recursively."""
+    if isinstance(obj, list):
+        return tuple(_make_hashable(item) for item in obj)
+    elif isinstance(obj, dict):
+        return tuple(sorted((k, _make_hashable(v)) for k, v in obj.items()))
+    else:
+        return obj
+
+
 def parrot(fn: Callable[..., Any]) -> Any:
     fn_module = inspect.getmodule(fn)
     fn_file = inspect.getfile(fn) if fn_module else "unknown"
@@ -120,19 +130,30 @@ def parrot(fn: Callable[..., Any]) -> Any:
     # Build lookup map from args to results
     results_map: dict[tuple[Any, ...], Any] = {}
     for entry in cache_data["results"]:
-        # Convert args list to tuple for hashable key
-        args_key = tuple(entry["args"])
+        # Convert args list to hashable tuple for hashable key
+        args_key = tuple(_make_hashable(arg) for arg in entry["args"])
         if "error" in entry:
             results_map[args_key] = Exception(entry["error"])
         else:
             results_map[args_key] = entry["result"]
 
-    # Get the fully qualified name for patching
-    fn_module_name = fn_module.__name__ if fn_module else "__main__"
-    patch_target = f"{fn_module_name}.{fn_name}"
+    # Determine patch target based on whether it's a method or function
+    if inspect.ismethod(fn) or (hasattr(fn, '__self__') and hasattr(fn, '__func__')):
+        # It's a bound method - patch on the class
+        class_name = fn.__self__.__class__.__name__
+        fn_module_name = fn_module.__name__ if fn_module else "__main__"
+        patch_target = f"{fn_module_name}.{class_name}.{fn_name}"
+    elif hasattr(fn, '__qualname__') and '.' in fn.__qualname__:
+        # It's an unbound method (class method)
+        fn_module_name = fn_module.__name__ if fn_module else "__main__"
+        patch_target = f"{fn_module_name}.{fn.__qualname__}"
+    else:
+        # It's a regular function
+        fn_module_name = fn_module.__name__ if fn_module else "__main__"
+        patch_target = f"{fn_module_name}.{fn_name}"
 
     def mock_fn(*call_args: Any) -> Any:
-        args_key = tuple(call_args)
+        args_key = tuple(_make_hashable(arg) for arg in call_args)
         if args_key not in results_map:
             # Call any registered hooks with available info
             for hook in _missing_args_hooks:

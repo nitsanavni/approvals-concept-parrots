@@ -1,0 +1,8 @@
+Function: analytics_system.generate_summary
+File: analytics_system.py
+--------------------------------------------------
+Args: [[{'category': 'sales', 'value': 100}, {'category': 'sales', 'value': 150}, {'category': 'costs', 'value': 50}, {'category': 'costs', 'value': 60}]] -> Result: {'status': 'success', 'summary': {'sales': {'average': 125.0, 'trend': 'increasing', 'count': 2}, 'costs': {'average': 55.0, 'trend': 'increasing', 'count': 2}}, 'formatted': "=== Analytics Summary ===\n{'sales': {'average': 125.0, 'trend': 'increasing', 'count': 2}, 'costs': {'average': 55.0, 'trend': 'increasing', 'count': 2}}\n"}
+Args: [[{'category': 'revenue', 'value': 200}, {'category': 'revenue', 'value': 250}, {'category': 'revenue', 'value': 300}]] -> Result: {'status': 'success', 'summary': {'revenue': {'average': 250.0, 'trend': 'increasing', 'count': 3}}, 'formatted': "=== Analytics Summary ===\n{'revenue': {'average': 250.0, 'trend': 'increasing', 'count': 3}}\n"}
+Args: [[]] -> Result: {'status': 'error', 'message': 'Invalid data'}
+Args: [[{'category': 'profit', 'value': 100}, {'category': 'profit', 'value': -50}]] -> Result: {'status': 'error', 'message': 'Invalid data'}
+Args: [[{'value': 75}, {'value': 85}]] -> Result: {'status': 'success', 'summary': {'uncategorized': {'average': 80.0, 'trend': 'increasing', 'count': 2}}, 'formatted': "=== Analytics Summary ===\n{'uncategorized': {'average': 80.0, 'trend': 'increasing', 'count': 2}}\n"}
