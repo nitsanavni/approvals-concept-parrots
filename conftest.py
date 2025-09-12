@@ -1,6 +1,14 @@
 import re
 from pathlib import Path
 from parrot import register_missing_args_hook
+import pytest
+from approvaltests import set_default_reporter
+from approvaltests.reporters import PythonNativeReporter
+
+
+@pytest.fixture(scope="session", autouse=True)
+def configure_approvaltests_reporter():
+    set_default_reporter(PythonNativeReporter())
 
 
 def hello_hook(function_name: str, file_path: str, args, cache_data: dict) -> None:

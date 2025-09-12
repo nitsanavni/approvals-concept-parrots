@@ -11,7 +11,7 @@ _missing_args_hooks: List[Callable[[str, str, Any, Dict], None]] = []
 
 def register_missing_args_hook(hook: Callable[[str, str, Any, Dict], None]) -> None:
     """Register a hook to be called when parrot encounters uncached arguments.
-    
+
     Hook signature: (function_name: str, file_path: str, args: Any, cache_data: Dict) -> None
     """
     _missing_args_hooks.append(hook)
@@ -23,6 +23,7 @@ def clear_missing_args_hooks() -> None:
 
 
 def verify_parrot(fn: Callable[..., Any], args: List[List[Any]]) -> None:
+    # TODO - if args empty - throw
     fn_module = inspect.getmodule(fn)
     fn_file = inspect.getfile(fn) if fn_module else "unknown"
     fn_name = fn.__name__
@@ -134,7 +135,12 @@ def parrot(fn: Callable[..., Any]) -> Any:
         if args_key not in results_map:
             # Call any registered hooks with available info
             for hook in _missing_args_hooks:
-                hook(fn_name, str(pickle_file.parent / fn_file_path.name), call_args, cache_data)
+                hook(
+                    fn_name,
+                    str(pickle_file.parent / fn_file_path.name),
+                    call_args,
+                    cache_data,
+                )
             raise ValueError(f"No cached result for args: {call_args}")
         result = results_map[args_key]
         if isinstance(result, Exception):
