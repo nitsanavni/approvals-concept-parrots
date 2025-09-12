@@ -107,6 +107,9 @@ def parrot(fn: Callable[..., Any]) -> Any:
     pickle_file = Path.cwd() / f"{fn_file_name}-{fn_name}.approved.pickle"
 
     if not pickle_file.exists():
+        # Call hooks for missing cache file
+        for hook in _missing_args_hooks:
+            hook(fn_name, str(fn_file_path), None, {"results": []})
         raise FileNotFoundError(f"No approved pickle file found: {pickle_file}")
 
     with open(pickle_file, "rb") as f:

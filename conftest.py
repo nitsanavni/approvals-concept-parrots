@@ -4,12 +4,19 @@ from parrot import register_missing_args_hook
 
 
 def hello_hook(function_name: str, file_path: str, args, cache_data: dict) -> None:
-    """A friendly hook that prints info when uncached arguments are encountered."""
-    print("\n🦜 Hello! Parrot encountered uncached arguments:")
-    print(f"   Function: {function_name}")
-    print(f"   File: {file_path}")
-    print(f"   Arguments: {args}")
-    print(f"   Cached args count: {len(cache_data.get('results', []))}")
+    """A friendly hook that prints info when uncached arguments are encountered or no cache exists."""
+    if args is None:
+        # No cache file exists at all
+        print("\n🦜 Hello! Parrot found no cache file for this function:")
+        print(f"   Function: {function_name}")
+        print(f"   File: {file_path}")
+    else:
+        # Cache exists but these specific arguments aren't cached
+        print("\n🦜 Hello! Parrot encountered uncached arguments:")
+        print(f"   Function: {function_name}")
+        print(f"   File: {file_path}")
+        print(f"   Arguments: {args}")
+        print(f"   Cached args count: {len(cache_data.get('results', []))}")
     
     # Search for verify_parrot calls for this function in the codebase
     # Pattern looks for verify_parrot( followed by optional whitespace, then the function name
@@ -41,7 +48,60 @@ def hello_hook(function_name: str, file_path: str, args, cache_data: dict) -> No
         print("\n   You can add the new arguments to the existing verify_parrot call!")
     else:
         print(f"\n   No verify_parrot({function_name}) found in codebase.")
-        print("   Consider creating a test with verify_parrot to cache these arguments!")
+        print("   Creating a new test file with verify_parrot...")
+        
+        # Get the module name from the file path
+        module_path = Path(file_path)
+        module_name = module_path.stem
+        
+        # Determine the import path for the function
+        # Assuming the file is in the current directory or a subdirectory
+        relative_path = module_path.relative_to(Path.cwd())
+        import_path = str(relative_path.with_suffix("")).replace("/", ".")
+        
+        # Create test file name
+        test_file_name = f"test_{module_name}_generated.py"
+        test_file_path = Path.cwd() / test_file_name
+        
+        # Create the test file content
+        if args is None:
+            # No cache exists - create empty verify_parrot
+            test_content = f'''"""Auto-generated test file for {function_name}"""
+from parrot import verify_parrot
+from {import_path} import {function_name}
+
+
+def test_{function_name}():
+    """Test for {function_name} - add your test arguments here."""
+    verify_parrot(
+        {function_name},
+        [
+            # Add your test cases here, e.g.:
+            # [arg1, arg2],
+        ],
+    )
+'''
+        else:
+            # Cache exists but args missing - create with the missing args
+            test_content = f'''"""Auto-generated test file for {function_name}"""
+from parrot import verify_parrot
+from {import_path} import {function_name}
+
+
+def test_{function_name}():
+    """Test for {function_name} with auto-captured arguments."""
+    verify_parrot(
+        {function_name},
+        [
+            {list(args)},
+        ],
+    )
+'''
+        
+        # Write the test file
+        test_file_path.write_text(test_content)
+        print(f"   Created test file: {test_file_path}")
+        print(f"   Run 'pytest {test_file_name}::test_{function_name}' to capture the result!")
     print()
 
 
