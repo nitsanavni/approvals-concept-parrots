@@ -1,6 +1,9 @@
 name: Deploy Talks to GitHub Pages
 
 on:
+  push:
+    paths:
+      - 'talks/**'
   workflow_dispatch:
 
 permissions:
