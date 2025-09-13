@@ -4,11 +4,11 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "dev:hello1": "slidev hello1.md",
+    "dev:parrots": "slidev parrots.md",
     "dev:hello2": "slidev hello2.md",
-    "build:hello1": "slidev build hello1.md --out dist/hello1 --base /approvals-concept-parrots/hello1/",
+    "build:parrots": "slidev build parrots.md --out dist/parrots --base /approvals-concept-parrots/parrots/",
     "build:hello2": "slidev build hello2.md --out dist/hello2 --base /approvals-concept-parrots/hello2/",
-    "build:all": "bun run build:hello1 && bun run build:hello2 && mkdir -p dist && cp index.html dist/",
+    "build:all": "bun run build:parrots && bun run build:hello2 && mkdir -p dist && cp index.html dist/",
     "preview": "bunx serve dist"
   },
   "devDependencies": {

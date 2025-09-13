@@ -17,8 +17,8 @@ bun install
 View presentations locally:
 
 ```bash
-# For hello1 presentation
-bun run dev:hello1
+# For parrots presentation
+bun run dev:parrots
 
 # For hello2 presentation  
 bun run dev:hello2
@@ -41,5 +41,5 @@ bun run preview
 ```
 
 The presentations will be available at:
-- `/hello1/` - Hello1 presentation
+- `/parrots/` - Parrots lightning talk
 - `/hello2/` - Hello2 presentation
