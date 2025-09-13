@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - 'talks/**'
+      - '.github/workflows/deploy-talks.yml'
   workflow_dispatch:
 
 permissions:
